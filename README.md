@@ -6,7 +6,7 @@
 
 ## 📸 Protótipo
 
-O design base pode ser visualizado [aqui](https://www.figma.com/design/c6idKjxzsF2Z3bnOuxdHvk/PirckerHut?node-id=0-1&t=yGkG6Rlhgx14Tp1R-1) *(inserir link ou screenshot quando estiver online)*
+O design base pode ser visualizado [aqui](https://www.figma.com/design/c6idKjxzsF2Z3bnOuxdHvk/PirckerHut?node-id=0-1&t=yGkG6Rlhgx14Tp1R-1)
 
 ---
 
