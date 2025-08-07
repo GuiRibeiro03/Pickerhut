@@ -1,0 +1,204 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cast {
+  id         String       @id @default(uuid()) @db.Uuid
+  name       String?      @db.VarChar(255)
+  birthdate  DateTime?    @db.Date
+  photo_url  String?
+  moviecast  moviecast[]
+  seriescast seriescast[]
+}
+
+model User {
+  id                     String                   @id @default(uuid()) @db.Uuid
+  name                   String?                  @db.VarChar(100)
+  email                  String                   @unique @db.VarChar(100)
+  password               String
+  created_at             DateTime?                @default(now()) @db.Timestamp(6)
+  favorite               favorite[]
+  rating                 rating[]
+  usernotificationstatus usernotificationstatus[]
+  watchlistitem          watchlistitem[]
+}
+
+model agerating {
+  id     String   @id @default(uuid()) @db.Uuid
+  code   String   @db.VarChar(10)
+  label  String   @db.VarChar(50)
+  movies movies[]
+  series series[]
+}
+
+model castroletype {
+  id         String       @id @default(uuid()) @db.Uuid
+  code       String       @db.VarChar(10)
+  label      String       @db.VarChar(50)
+  moviecast  moviecast[]
+  seriescast seriescast[]
+}
+
+model episode {
+  id             String  @id @default(uuid()) @db.Uuid
+  season_id      String? @db.Uuid
+  episode_number Int?
+  photo_url      String?
+  title          String? @db.VarChar(255)
+  duration       Int?
+  season         season? @relation(fields: [season_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model favorite {
+  id          String    @id @default(uuid()) @db.Uuid
+  user_id     String?   @db.Uuid
+  target_type String?   @db.VarChar(20)
+  target_id   String?   @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  User        User?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model genretypes {
+  id          String        @id @default(uuid()) @db.Uuid
+  type        String        @db.VarChar(50)
+  moviegenre  moviegenre[]
+  seriesgenre seriesgenre[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model globalnotification {
+  id                     String                   @id @default(uuid()) @db.Uuid
+  title                  String?                  @db.VarChar(255)
+  message                String?
+  target_type            String?                  @db.VarChar(20)
+  target_id              String?                  @db.Uuid
+  created_at             DateTime?                @default(now()) @db.Timestamp(6)
+  usernotificationstatus usernotificationstatus[]
+}
+
+model moviecast {
+  movie_id     String        @db.Uuid
+  cast_id      String        @db.Uuid
+  role_type    String?       @db.Uuid
+  Cast         Cast          @relation(fields: [cast_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  movies       movies        @relation(fields: [movie_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  castroletype castroletype? @relation(fields: [role_type], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([movie_id, cast_id])
+}
+
+model moviegenre {
+  movie_id   String     @db.Uuid
+  genre_id   String     @db.Uuid
+  genretypes genretypes @relation(fields: [genre_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  movies     movies     @relation(fields: [movie_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([movie_id, genre_id])
+}
+
+model movies {
+  id            String       @id @default(uuid()) @db.Uuid
+  title         String?      @db.VarChar(255)
+  description   String?
+  realease_year Int?
+  poster_url    String?
+  is_featured   Boolean?     @default(false)
+  duration      Int?
+  age_rating_id String?      @db.Uuid
+  created_at    DateTime?    @default(now()) @db.Timestamp(6)
+  moviecast     moviecast[]
+  moviegenre    moviegenre[]
+  agerating     agerating?   @relation(fields: [age_rating_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model rating {
+  id          String    @id @default(uuid()) @db.Uuid
+  user_id     String?   @db.Uuid
+  target_type String?   @db.VarChar(20)
+  target_id   String?   @db.Uuid
+  value       Int?
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  User        User?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model season {
+  id            String    @id @default(uuid()) @db.Uuid
+  series_id     String?   @db.Uuid
+  season_number Int?
+  episode       episode[]
+  series        series?   @relation(fields: [series_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model series {
+  id            String        @id @default(uuid()) @db.Uuid
+  title         String?       @db.VarChar(255)
+  description   String?
+  realease_year Int?
+  poster_url    String?
+  is_featured   Boolean?      @default(false)
+  duration      Int?
+  age_rating_id String?       @db.Uuid
+  created_at    DateTime?     @default(now()) @db.Timestamp(6)
+  season        season[]
+  agerating     agerating?    @relation(fields: [age_rating_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  seriescast    seriescast[]
+  seriesgenre   seriesgenre[]
+}
+
+model seriescast {
+  series_id    String        @db.Uuid
+  cast_id      String        @db.Uuid
+  role_type    String?       @db.Uuid
+  Cast         Cast          @relation(fields: [cast_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  castroletype castroletype? @relation(fields: [role_type], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  series       series        @relation(fields: [series_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([series_id, cast_id])
+}
+
+model seriesgenre {
+  series_id  String     @db.Uuid
+  genre_id   String     @db.Uuid
+  genretypes genretypes @relation(fields: [genre_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  series     series     @relation(fields: [series_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([series_id, genre_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model trailer {
+  id          String    @id @default(uuid()) @db.Uuid
+  url         String
+  target_type String?   @db.VarChar(20)
+  target_id   String    @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model usernotificationstatus {
+  id                 String              @id @default(uuid()) @db.Uuid
+  user_id            String?             @db.Uuid
+  notification_id    String?             @db.Uuid
+  is_read            Boolean?            @default(false)
+  read_at            DateTime?           @db.Timestamp(6)
+  globalnotification globalnotification? @relation(fields: [notification_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  User               User?               @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model watchlistitem {
+  id          String    @id @default(uuid()) @db.Uuid
+  user_id     String?   @db.Uuid
+  target_type String?   @db.VarChar(20)
+  target_id   String?   @db.Uuid
+  status      String?   @db.VarChar(20)
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  User        User?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
