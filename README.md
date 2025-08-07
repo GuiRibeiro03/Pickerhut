@@ -21,7 +21,9 @@ O design base pode ser visualizado [aqui](https://www.figma.com/design/c6idKjxzs
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
 - [TypeScript](https://www.typescriptlang.org/)
-
+- [Prisma](https://www.prisma.io/)
+### 📅 Database
+- [PostgreSQL](https://www.postgresql.org/)
 ---
 ## 🧠 Funcionalidades
 
