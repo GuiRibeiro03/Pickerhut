@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "../../generated/prisma";
 import bcrypt from "bcrypt";
+import { error } from "console";
 
 const prisma = new PrismaClient();
 
@@ -38,7 +39,7 @@ export async function getUserById(req: Request, res: Response) {
 
 
 // Create User
-
+//Testado
 export async function createUser(req:Request, res:Response) {
     //Definir os campos e retirar quais quer espaços
     const name = typeof req.body.name === "string" ? req.body.name.trim() : undefined;
@@ -71,12 +72,14 @@ export async function updateUser(req: Request, res: Response){
     if (!id) {
         return res.status(400).json({ error: "ID é obrigatório" });
     }
+
     const name = typeof req.body.name === "string" ? req.body.name.trim() : undefined;
     const email = typeof req.body.email === "string" ? req.body.email.trim().toLowerCase() : undefined;
 
 
     try {
-        const user = prisma.user.update({
+        //Lembrar que pedidos e funcções do prisma precisam do await antes
+        const user = await prisma.user.update({
             where: {id},
             data: {name,email}
         });
@@ -84,4 +87,18 @@ export async function updateUser(req: Request, res: Response){
     } catch (error: any) {
         return res.status(400).json({ error: error.message });
     }
+}
+
+export async function deleteUser(req:Request, res: Response) {
+    const {id} = req.params;
+    if(!id)
+        return res.status(400).json({error: "ID é obrigatório"});
+
+    try {
+        await prisma.user.delete({where: {id}});
+        res.json({message: "Utilizador eliminado como sucesso!"});
+    } catch (error: any) {
+        return res.status(400).json({ error: error.message });
+    }
+
 }

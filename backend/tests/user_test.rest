@@ -1,0 +1,39 @@
+### GET /
+GET http://localhost:3000
+
+
+### Get All Users
+GET http://localhost:3000/api/users
+
+### Get User by id
+GET http://localhost:3000/api/users/125c640b-8817-486c-8c8e-ed06660ed669
+
+
+###POST
+### Create User 
+
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "user2@gmail.com",
+    "password": "Ad12"
+}
+
+###PATCH
+
+### Update User
+PATCH http://localhost:3000/api/users/125c640b-8817-486c-8c8e-ed06660ed669
+Content-Type: application/json
+
+{
+    "name": "Cristiano Ronaldo"
+}
+
+
+### DELETE
+
+### Delete User
+
+DELETE http://localhost:3000/api/users/125c640b-8817-486c-8c8e-ed06660ed669
