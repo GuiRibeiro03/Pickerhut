@@ -1,0 +1,54 @@
+
+### GET /
+GET http://localhost:3000
+
+
+### Get All movies
+GET http://localhost:3000/api/movies
+
+### Get Movie By ID
+GET http://localhost:3000/api/movies/45283dda-ea62-49af-b8b3-f256ccff4c2e
+
+
+### Create Movie
+
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+
+{
+    "title": "Inception",
+    "description": "A mind-bending thriller about dreams within dreams.",
+    "realease_year": 2010,
+    "poster_url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FM%2FMV5BMjExMjkwNTQ0Nl5BMl5BanBnXkFtZTcwNTY0OTk1Mw%40%40._V1_.jpg&f=1&nofb=1&ipt=b352ceb4153a47b0c734ca7b4c2848f8f300816de103a6550047ca8aec5a3b49",    
+    "duration": 148,
+    "age_rating_id":"9ceaef47-b277-4463-b3c6-da686f1cf17c"
+    
+}
+
+###
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+
+{
+    "title": "Barbie in the Nutcracker",
+    "description": "Barbie and Kelly are practicing their dance steps for the ballet. Kelly is having trouble and thinks she'll never get it. To help her Barbie tells the story of the Nutcracker.",
+    "realease_year": 2001,
+    "poster_url": "https://static.wikia.nocookie.net/barbie-movies/images/c/c5/1-poster-bmw.jpg/revision/latest?cb=20201129102739",    
+    "duration": 78,
+    "age_rating_id":"b5efc814-afa4-4950-8ef6-e424ea876332"
+    
+}
+
+### Update Movie
+PATCH http://localhost:3000/api/movies/65d84e97-ecf4-4332-93bb-59c2b822ea9f
+Content-Type: application/json
+
+{
+    "title": "Inception (Director's Cut)",
+    "duration": 148
+}
+
+
+
+### Delete Movie
+DELETE http://localhost:3000/api/movies/65d84e97-ecf4-4332-93bb-59c2b822ea9f
