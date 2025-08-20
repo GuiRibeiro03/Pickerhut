@@ -1,0 +1,45 @@
+### GET ALL
+GET http://localhost:3000/api/series
+
+
+### GET BY ID
+GET http://localhost:3000/api/series/b491142f-d9ad-4a6f-8319-163b17b436f5
+
+### CREATE
+POST http://localhost:3000/api/series
+Content-Type: application/json
+
+{
+  "title": "Mr. Robot",
+  "description": "A cybersecurity engineer and hacker is recruited by a mysterious group to bring down corrupt corporations.",
+  "realease_year": 2015,
+  "poster_url": "https://image.tmdb.org/t/p/original/kv1nRqgebSsREnd7vdC2pSGjpLo.jpg",
+  "is_featured": false,
+  "age_rating_id": "4705b7ab-757e-45ea-b015-f8be0a43bed2"
+}
+
+### CREATE
+POST http://localhost:3000/api/series
+Content-Type: application/json
+
+{
+  "title": "Silicon Valley",
+  "description": "A group of software developers try to make it big in Silicon Valley.",
+  "realease_year": 2014,
+  "poster_url": "https://image.tmdb.org/t/p/original/4ptpmWBVD9HY9hMh8Cbs6SMiy7p.jpg",
+  "is_featured": false,
+  "age_rating_id": "4705b7ab-757e-45ea-b015-f8be0a43bed2"
+}
+
+
+### UPDATE
+PATCH http://localhost:3000/api/series/b491142f-d9ad-4a6f-8319-163b17b436f5
+Content-Type: application/json
+
+{
+  "title":"Mr. Robot"
+}
+
+
+### DELETE
+DELETE http://localhost:3000/api/series/b491142f-d9ad-4a6f-8319-163b17b436f5

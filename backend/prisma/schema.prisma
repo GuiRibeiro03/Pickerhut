@@ -144,7 +144,6 @@ model series {
   realease_year Int?
   poster_url    String?
   is_featured   Boolean?      @default(false)
-  duration      Int?
   age_rating_id String?       @db.Uuid
   created_at    DateTime?     @default(now()) @db.Timestamp(6)
   season        season[]

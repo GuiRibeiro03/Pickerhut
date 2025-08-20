@@ -39,6 +39,19 @@ Content-Type: application/json
     
 }
 
+###
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+
+{
+    "title": "The Matrix",
+    "description": "A computer hacker learns about the true nature of his reality and his role in the war against its controllers.",
+    "realease_year": 1999,
+    "poster_url": "https://m.media-amazon.com/images/I/51EG732BV3L.jpg",
+    "duration": 136,
+    "age_rating_id": "9ceaef47-b277-4463-b3c6-da686f1cf17c"
+}
+
 ### Update Movie
 PATCH http://localhost:3000/api/movies/65d84e97-ecf4-4332-93bb-59c2b822ea9f
 Content-Type: application/json

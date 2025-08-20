@@ -58,19 +58,13 @@ export async function getMovieById(req: Request, res: Response) {
   }
 }
 
+// Function Get movie Cast
+
 // Create movie
 export async function createMovie(req: Request, res: Response) {
+  const { title, description, realease_year, poster_url, is_featured, duration, age_rating_id } = req.body;
+
   try {
-    const {
-      title,
-      description,
-      realease_year,
-      poster_url,
-      is_featured,
-      duration,
-      age_rating_id,
-    } = req.body;
-    
     const data: any = {
       title,
       description,
@@ -78,11 +72,12 @@ export async function createMovie(req: Request, res: Response) {
       poster_url,
       is_featured,
       duration,
+      age_rating_id
     };
-    // Do NOT set data.id = ...
-    if (typeof age_rating_id === "string" && age_rating_id.length > 0) {
-      data.age_rating_id = age_rating_id;
-    }
+
+    // if (typeof age_rating_id === "string" && age_rating_id.length > 0) {
+    //   data.age_rating_id = age_rating_id;
+    // }
 
     const movie = await prisma.movies.create({ data });
     res.status(201).json(movie);
@@ -114,10 +109,9 @@ export async function updateMovie(req: Request, res: Response) {
       poster_url,
       is_featured,
       duration,
+      age_rating_id
     };
-    if (typeof age_rating_id === "string" && age_rating_id.length > 0) {
-      data.age_rating_id = age_rating_id;
-    }
+
 
     const movie = await prisma.movies.update({
       where: { id },
