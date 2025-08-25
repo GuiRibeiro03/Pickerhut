@@ -1,0 +1,47 @@
+### GET
+
+GET http://localhost:3000/api/ratings
+
+
+### GET
+
+GET http://localhost:3000/api/ratings/ce323313-669c-42a1-a785-d429dc11d017
+
+### POST
+
+POST http://localhost:3000/api/ratings
+Content-Type: application/json
+
+{
+  "user_id": "fd4f7956-a356-4e22-9e54-f0fc60d333bb",
+  "target_type": "movie",
+  "target_id": "45283dda-ea62-49af-b8b3-f256ccff4c2e",
+  "value": 8
+}
+
+###
+
+POST  http://localhost:3000/api/ratings
+Content-Type: application/json
+
+{
+  "user_id": "fd4f7956-a356-4e22-9e54-f0fc60d333bb",
+  "target_type": "series",
+  "target_id": "036b0d00-6f18-424f-b343-e271d24faee1",
+  "value": 9
+}
+
+
+###
+
+PATCH http://localhost:3000/api/ratings/ce323313-669c-42a1-a785-d429dc11d017
+Content-Type: application/json
+
+{
+  "value": 10
+}
+
+
+### DELETE
+
+DELETE http://localhost:3000/api/ratings/ce323313-669c-42a1-a785-d429dc11d017

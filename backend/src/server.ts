@@ -3,6 +3,7 @@ import { PrismaClient } from '../generated/prisma';
 import userRoutes from './routes/user';
 import movieRoutes from './routes/movies'
 import seriesRoutes from './routes/series';
+import ratingRoutes from './routes/ratings';
 
 const app = express();
 const prisma = new PrismaClient();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/api/users',userRoutes);
 app.use('/api/movies',movieRoutes);
 app.use('/api/series',seriesRoutes);
+app.use('/api/ratings', ratingRoutes);
 
 
 // Endpoint para / 
